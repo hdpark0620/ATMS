@@ -1,0 +1,39 @@
+ATMS
+
+DB
+
+table_name: Machines
+
+id  not null - auto int
+name not null nvarchar
+image_path_name null nvarchar
+add_date not null date_time 
+modify_date not null date_time
+
+table_name: Logs
+
+Id not null -auto int
+machine_id not null int
+image_path_name not null nvarchar
+temperature not null float
+status_id not null int
+memo null nvarchar(max)
+add_date not null date_time
+modify_date not null date_time
+
+foregin_key machine_id
+foregin_key status_id
+
+index machine_id
+
+table_name: status
+id not null -auto int
+code not null string Enum (normal or abnormal or untreated or completed)
+add_date not null date_time
+modify_date not null date_time 
+
+
+normal
+abnormal
+	untreated
+	completed
