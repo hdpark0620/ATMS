@@ -18,7 +18,7 @@ public final class LockUtility {
 	public static synchronized boolean lock() throws Exception {
 		
 		try {
-			fos = new FileOutputStream("C:\\temp\\lockfile");
+			fos = new FileOutputStream("C:\\Users\\LEE\\Desktop\\project\\ATMS\\lockfile");
 			fchan = fos.getChannel();
 			flock = fchan.tryLock();
 		} catch (IOException e) {

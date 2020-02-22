@@ -1,0 +1,64 @@
+CREATE SEQUENCE public.machines_seq_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+CREATE SEQUENCE public.status_seq_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+    
+CREATE SEQUENCE public.logs_seq_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+DROP TABLE IF EXISTS LOGS;
+DROP TABLE IF EXISTS STATUS;
+DROP TABLE IF EXISTS MACHINES;
+
+-- create machines table
+CREATE TABLE MACHINES(
+  id INT NOT NULL DEFAULT nextval('machines_seq_seq'::regclass),
+  name VARCHAR(255) NOT NULL,
+  image_patch VARCHAR(255) NOT NULL,
+  created_at Timestamp NOT NULL,
+  updated_at Timestamp NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE(id),
+  UNIQUE(name)
+);
+
+
+-- create status table
+CREATE TABLE STATUS(
+  id INT NOT NULL DEFAULT nextval('status_seq_seq'::regclass),
+  code VARCHAR(255) NOT NULL, -- Enum (normal or abnormal or untreated or completed)
+  created_at Timestamp  NOT NULL,
+  updated_at Timestamp  NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE(id)
+);
+
+-- create logs table
+CREATE TABLE LOGS(
+  id INT NOT NULL DEFAULT nextval('logs_seq_seq'::regclass),
+  machine_id INT NOT NULL,
+  status_id INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  image_patch VARCHAR(255) NOT NULL,
+  temperature FLOAT NOT NULL,
+  memo TEXT NULL,
+  created_at Timestamp  NOT NULL,
+  updated_at Timestamp  NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE(id),
+  FOREIGN KEY (machine_id) REFERENCES MACHINES(id) ON DELETE CASCADE,
+  FOREIGN KEY (status_id) REFERENCES STATUS(id) ON DELETE CASCADE
+);
